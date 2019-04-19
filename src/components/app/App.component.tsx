@@ -1,11 +1,13 @@
-import React from 'react';
+import React from "react";
 
-import './App.scss';
+import "./App.scss";
+
+import Table from "./Table/Table.component";
 
 function App() {
   return (
-    <div>
-      Hello World
+    <div className="container">
+      <Table />
     </div>
   );
 }
