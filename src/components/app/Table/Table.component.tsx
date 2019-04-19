@@ -4,17 +4,13 @@ import CardHeader from "@material-ui/core/CardHeader";
 import CardContent from "@material-ui/core/CardContent";
 
 import "./Table.scss";
-import Search from "./Search/Search.component";
+import CatagorySelect from "./CatagorySelect/CatagorySelect.component";
 
 function Table() {
   return (
     <Card className="card">
-      <CardHeader subheader={<Search />}>
-        Hello World
-      </CardHeader>
-      <CardContent>
-        Hello Body
-      </CardContent>
+      <CardHeader subheader={<CatagorySelect />}>Hello World</CardHeader>
+      <CardContent>Hello Body</CardContent>
     </Card>
   );
 }
