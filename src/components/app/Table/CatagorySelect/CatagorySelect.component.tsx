@@ -35,10 +35,13 @@ function CatagorySelect({
         children={
           <AddCatagory
             submit={(catagory: string) => {
-              addCatagory(catagory);
-              setName(catagory);
-              setOpen(false);
+              if (catagory.length > 0 && !catagories.includes(catagory)) {
+                addCatagory(catagory);
+                setName(catagory);
+                setOpen(false);
+              }
             }}
+            setOpen={setOpen}
           />
         }
         open={open}
