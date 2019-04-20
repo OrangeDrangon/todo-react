@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Card, CardHeader, CardContent} from "@material-ui/core";
 import { Option } from "react-dropdown";
 
-import "./Table.scss";
+import "./Table.module.scss";
 import CatagorySelect from "./CatagorySelect/CatagorySelect.component";
 import Tasks from "./Tasks/Tasks.component";
 
@@ -12,7 +12,7 @@ function Table() {
     setName(selected.value);
   };
   return (
-    <Card className="Table-Card">
+    <Card className="card">
       <CardHeader
         subheader={
           <CatagorySelect

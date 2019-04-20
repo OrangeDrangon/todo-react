@@ -1,12 +1,12 @@
 import React from "react";
 
-import "./App.scss";
+import { container } from "./App.module.scss";
 
 import Table from "./Table/Table.component";
 
 function App() {
   return (
-    <div className="App-Container">
+    <div className={container}>
       <Table />
     </div>
   );

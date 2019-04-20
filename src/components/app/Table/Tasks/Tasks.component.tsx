@@ -13,7 +13,7 @@ function Tasks({ name }: { name: string }) {
   });
 
   return (
-    <div>
+    <div className="Tasks-Container">
       {name ? (
         <div>
           <AddTask />
