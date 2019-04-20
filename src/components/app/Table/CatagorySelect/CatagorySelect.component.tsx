@@ -4,7 +4,7 @@ import { Add } from "@material-ui/icons";
 import Dropdown, { Option } from "react-dropdown";
 import "react-dropdown/style.css";
 
-import "./CatagorySelect.scss";
+import classes from "./CatagorySelect.module.scss";
 import AddCatagory from "./AddCatagory/AddCatagory.component";
 import { useCatagories } from "src/hooks/useCatagories.hook";
 
@@ -21,9 +21,9 @@ function CatagorySelect({
   const [open, setOpen] = useState(false);
 
   return (
-    <div className="CatagorySelect-Container">
+    <div className={classes.container}>
       <Dropdown
-        className="CatagorySelect-Dropdown"
+        className={classes.dropdown}
         options={catagories}
         onChange={onChange}
         value={name}

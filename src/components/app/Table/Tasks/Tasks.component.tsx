@@ -1,6 +1,6 @@
 import React from "react";
 
-import "./Tasks.scss";
+import classes from "./Tasks.module.scss";
 import AddTask from "./AddTask/AddTask.component";
 import { useTasks } from "src/hooks/useTasks.hook";
 import Task from "./Task/Task.component";
@@ -13,7 +13,7 @@ function Tasks({ name }: { name: string }) {
   });
 
   return (
-    <div className="Tasks-Container">
+    <div className={classes.container}>
       {name ? (
         <div>
           <AddTask />

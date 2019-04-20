@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Card, Button, Input } from "@material-ui/core";
 
-import "./AddCatagory.scss";
+import classes from "./AddCatagory.module.scss";
 
 function AddCatagory({
   submit,
@@ -13,14 +13,14 @@ function AddCatagory({
   const [value, setValue] = useState("");
   return (
     <div
-      className="AddCatagory-Container"
+      className={classes.container}
       onClick={function(event) {
         if (event.target == event.currentTarget) {
           setOpen(false);
         }
       }}
     >
-      <Card className="AddCatagory-Card" onClick={() => {}}>
+      <Card className={classes.card} onClick={() => {}}>
         <Input
           onChange={({ currentTarget }) => setValue(currentTarget.value)}
         />

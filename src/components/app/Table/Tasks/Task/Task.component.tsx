@@ -2,7 +2,7 @@ import React from "react";
 import Divider from "@material-ui/core/Divider";
 import format from "date-fns/esm/format";
 
-import "./Task.scss";
+// import classes from "./Task.module.scss";
 
 function Task({ content, date }: { content: string; date: Date }) {
   return (

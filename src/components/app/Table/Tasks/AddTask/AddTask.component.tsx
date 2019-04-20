@@ -1,7 +1,7 @@
 import React from "react";
 
 
-import "./AddTask.scss";
+// import classes from "./AddTask.module.scss";
 
 function AddTask() {
   return <div>Add a task loser</div>
