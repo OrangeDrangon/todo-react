@@ -1,40 +1,55 @@
-import React from "react";
+import React, { useState } from "react";
 
 import classes from "./Tasks.module.scss";
 import AddTask from "./AddTask/AddTask.component";
 import { useTasks } from "src/hooks/useTasks.hook";
 import Task from "./Task/Task.component";
 import { Catagory } from "src/utils/database.util";
+import { Button, Modal } from "@material-ui/core";
 
 function Tasks({ catagory }: { catagory: Catagory | null }) {
+  const [open, setOpen] = useState(false);
   const { tasks, addTask } = useTasks(catagory);
 
-  const elementTasks = (tasks ? tasks : []).map<any>((elm: any) => {
-    return <Task key={Math.random()} content={elm.content} date={elm.date} />;
+  const elementTasks = (tasks ? tasks : []).map<any>(elm => {
+    return (
+      <Task
+        key={elm.id ? elm.id : Math.random()}
+        content={elm.content}
+        date={elm.date}
+      />
+    );
   });
 
-  const id = catagory && catagory.id ? catagory.id : "";
+  const catagoryId = catagory && catagory.id ? catagory.id : "";
 
-  return (
+  return catagoryId ? (
     <div className={classes.container}>
-      {catagory ? (
-        <div>
-          <AddTask />
-          {elementTasks}
-        </div>
-      ) : (
-        "Select a class to get started"
-      )}
-      {
-        id ? <button
-        onClick={() => {
-          addTask({catagoryId: id, content: Math.random().toString(), date: new Date()});
-        }}
-      >
-        Add
-      </button> : ""
-      }
+      <Button color="primary" variant="contained" onClick={() => setOpen(true)}>
+        Add a Task
+      </Button>
+      <Modal
+        open={open}
+        onBackdropClick={() => setOpen(false)}
+        onEscapeKeyDown={() => setOpen(true)}
+        disableAutoFocus={true}
+        className={classes.modal}
+        children={
+          <AddTask
+            setOpen={setOpen}
+            submit={async (content: string, date: Date) => {
+              if (content.length > 0) {
+                await addTask({ catagoryId, content, date });
+                setOpen(false);
+              }
+            }}
+          />
+        }
+      />
+      {elementTasks}
     </div>
+  ) : (
+    <div>Select a class to get started</div>
   );
 }
 

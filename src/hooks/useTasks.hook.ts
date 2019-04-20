@@ -1,13 +1,13 @@
 import { useState, useEffect } from "react";
 
-import { Task, ITask, Catagory } from "src/utils/database.util";
+import { Task, Catagory, ITask } from "src/utils/database.util";
 
 export function useTasks(catagory: Catagory | null) {
   const [tasks, setTasks] = useState<Task[]>([]);
 
-  const addTask = async (task: ITask) => {
+  const addTask = async (data: ITask) => {
     if (catagory) {
-      const tNew = await new Task(task).save();
+      const tNew = await new Task(data).save();
       const tasksNew = [tNew, ...tasks];
       setTasks(tasksNew);
     }

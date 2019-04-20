@@ -14,18 +14,12 @@ function Table() {
   };
   return (
     <Card className={classes.card}>
-      <CardHeader
-        subheader={
-          <CatagorySelect
-            onChange={handleChange}
-            catagory={catagory}
-            setCatagory={setCatagory}
-          />
-        }
+      <CatagorySelect
+        onChange={handleChange}
+        catagory={catagory}
+        setCatagory={setCatagory}
       />
-      <CardContent>
-        <Tasks catagory={catagory} />
-      </CardContent>
+      <Tasks catagory={catagory} />
     </Card>
   );
 }

@@ -21,10 +21,12 @@ function CatagorySelect({
   const { catagories, addCatagory } = useCatagories();
   const [open, setOpen] = useState(false);
 
-  const option = catagory ? {
-    label: catagory.label,
-    value: catagory.value
-  } : '';
+  const option = catagory
+    ? {
+        label: catagory.label,
+        value: catagory.value
+      }
+    : "";
 
   return (
     <div className={classes.container}>
@@ -38,6 +40,7 @@ function CatagorySelect({
         <Add />
       </IconButton>
       <Modal
+        className={classes.modal}
         children={
           <AddCatagory
             submit={async (catagory: string) => {
@@ -53,7 +56,6 @@ function CatagorySelect({
                 setOpen(false);
               }
             }}
-            setOpen={setOpen}
           />
         }
         open={open}

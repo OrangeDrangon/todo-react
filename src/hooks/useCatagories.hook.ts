@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Catagory } from "src/utils/database.util";
+import { Catagory, ICatagory } from "src/utils/database.util";
 
 export function useCatagories() {
   const [catagories, setCatagories] = useState<Catagory[]>([]);
@@ -10,7 +10,7 @@ export function useCatagories() {
     })();
   }, []);
 
-  const addCatagory = async (data: { label: string; value: string }) => {
+  const addCatagory = async (data: ICatagory) => {
     const catNew = await new Catagory(data).save();
     const catagoriesNew = [catNew, ...catagories];
     setCatagories(catagoriesNew);
