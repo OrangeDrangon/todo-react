@@ -4,17 +4,20 @@ import classes from "./Tasks.module.scss";
 import AddTask from "./AddTask/AddTask.component";
 import { useTasks } from "src/hooks/useTasks.hook";
 import Task from "./Task/Task.component";
+import { Catagory } from "src/utils/database.util";
 
-function Tasks({ name }: { name: string }) {
-  const { tasks, addTask } = useTasks(name);
+function Tasks({ catagory }: { catagory: Catagory | null }) {
+  const { tasks, addTask } = useTasks(catagory);
 
   const elementTasks = (tasks ? tasks : []).map<any>((elm: any) => {
     return <Task key={Math.random()} content={elm.content} date={elm.date} />;
   });
 
+  const id = catagory && catagory.id ? catagory.id : "";
+
   return (
     <div className={classes.container}>
-      {name ? (
+      {catagory ? (
         <div>
           <AddTask />
           {elementTasks}
@@ -22,13 +25,15 @@ function Tasks({ name }: { name: string }) {
       ) : (
         "Select a class to get started"
       )}
-      <button
+      {
+        id ? <button
         onClick={() => {
-          addTask(Math.random().toString(), new Date());
+          addTask({catagoryId: id, content: Math.random().toString(), date: new Date()});
         }}
       >
         Add
-      </button>
+      </button> : ""
+      }
     </div>
   );
 }

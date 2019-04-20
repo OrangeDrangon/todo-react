@@ -7,18 +7,24 @@ import "react-dropdown/style.css";
 import classes from "./CatagorySelect.module.scss";
 import AddCatagory from "./AddCatagory/AddCatagory.component";
 import { useCatagories } from "src/hooks/useCatagories.hook";
+import { Catagory } from "src/utils/database.util";
 
 function CatagorySelect({
   onChange,
-  name,
-  setName
+  catagory,
+  setCatagory
 }: {
   onChange: (selected: Option) => void;
-  name: string;
-  setName: React.Dispatch<React.SetStateAction<string>>;
+  catagory: Catagory | null;
+  setCatagory: React.Dispatch<React.SetStateAction<Catagory | null>>;
 }) {
   const { catagories, addCatagory } = useCatagories();
   const [open, setOpen] = useState(false);
+
+  const option = catagory ? {
+    label: catagory.label,
+    value: catagory.value
+  } : '';
 
   return (
     <div className={classes.container}>
@@ -26,7 +32,7 @@ function CatagorySelect({
         className={classes.dropdown}
         options={catagories}
         onChange={onChange}
-        value={name}
+        value={option}
       />
       <IconButton color="primary" onClick={() => setOpen(true)}>
         <Add />
@@ -39,11 +45,11 @@ function CatagorySelect({
                 catagory.length > 0 &&
                 !catagories.map(elm => elm.label).includes(catagory)
               ) {
-                await addCatagory({
+                const catNew = await addCatagory({
                   label: catagory,
                   value: catagory.toLowerCase()
                 });
-                setName(catagory);
+                setCatagory(catNew);
                 setOpen(false);
               }
             }}

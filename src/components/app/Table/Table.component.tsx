@@ -1,15 +1,16 @@
 import React, { useState } from "react";
-import { Card, CardHeader, CardContent} from "@material-ui/core";
+import { Card, CardHeader, CardContent } from "@material-ui/core";
 import { Option } from "react-dropdown";
 
 import classes from "./Table.module.scss";
 import CatagorySelect from "./CatagorySelect/CatagorySelect.component";
 import Tasks from "./Tasks/Tasks.component";
+import { Catagory, db } from "src/utils/database.util";
 
 function Table() {
-  const [name, setName] = useState<string>("");
-  const handleChange = (selected: Option) => {
-    setName(selected.value);
+  const [catagory, setCatagory] = useState<Catagory | null>(null);
+  const handleChange = async (selected: Option) => {
+    setCatagory(await db.getCatagory(selected.value));
   };
   return (
     <Card className={classes.card}>
@@ -17,13 +18,13 @@ function Table() {
         subheader={
           <CatagorySelect
             onChange={handleChange}
-            name={name}
-            setName={setName}
+            catagory={catagory}
+            setCatagory={setCatagory}
           />
         }
       />
       <CardContent>
-        <Tasks name={name} />
+        <Tasks catagory={catagory} />
       </CardContent>
     </Card>
   );

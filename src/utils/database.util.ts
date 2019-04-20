@@ -13,11 +13,33 @@ export interface ITask {
   date: Date;
 }
 
+export class Task implements ITask {
+  id: number | undefined;
+  catagoryId: number;
+  content: string;
+  date: Date;
+
+  constructor({ id, catagoryId, content, date }: ITask) {
+    this.id = id;
+    this.catagoryId = catagoryId;
+    this.content = content;
+    this.date = date;
+  }
+
+  async save() {
+    const tNew = await db.addTask(this);
+    if (tNew.id) {
+      this.id = tNew.id;
+    }
+    return tNew;
+  }
+}
+
 export class Catagory implements ICatagory {
   id: number | undefined;
   label: string;
   value: string;
-  @enumerable(false) tasks: ITask[];
+  @enumerable(false) tasks: Task[];
 
   constructor({ id, label, value }: ICatagory) {
     this.id = id;
@@ -32,11 +54,7 @@ export class Catagory implements ICatagory {
    */
   async save() {
     return await db.transaction("rw", [db.catagories, db.tasks], async () => {
-      const catNew = await db.addCatagory({
-        id: this.id,
-        label: this.label,
-        value: this.value
-      });
+      const catNew = await db.addCatagory(this);
 
       if (catNew.id) {
         this.id = catNew.id;
@@ -59,15 +77,14 @@ export class Catagory implements ICatagory {
       }
       return catNew;
     });
-
   }
 
   async loadTasks() {
     if (this.id) {
-      this.tasks = await db.tasks
+      this.tasks = (await db.tasks
         .where("catagoryId")
         .equals(this.id)
-        .toArray();
+        .toArray()).map(elm => new Task(elm));
     } else {
       throw new Error("Please save the catagory to access its foreign objects");
     }
@@ -95,14 +112,33 @@ export class Database extends Dexie {
     this.catagories.mapToClass(Catagory);
   }
 
-  async addCatagory({ id, label, value }: ICatagory) {
+  async addCatagory({ id, ...data }: ICatagory) {
     return await this.transaction("rw", [this.catagories], async () => {
       const newId = id
-        ? await this.catagories.put({ id, label, value })
-        : await this.catagories.put({ label, value });
-
-      return new Catagory({ id: newId, label, value });
+        ? await this.catagories.put({ id, ...data })
+        : await this.catagories.put(data);
+      return new Catagory({ id: newId, ...data });
     });
+  }
+
+  async addTask({ id, ...data }: ITask) {
+    return await this.transaction("rw", [this.tasks], async () => {
+      const newId = id
+        ? await this.tasks.put({ id, ...data })
+        : await this.tasks.put(data);
+
+      return new Task({ id: newId, ...data });
+    });
+  }
+
+  async getCatagory(value: string) {
+    return new Catagory(
+      (await this.catagories
+        .where("value")
+        .equals(value)
+        .limit(1)
+        .toArray())[0]
+    );
   }
 }
 

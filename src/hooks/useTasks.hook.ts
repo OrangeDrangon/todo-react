@@ -1,46 +1,31 @@
 import { useState, useEffect } from "react";
 
-export function useTasks(name: string | null) {
-  const [tasks, setTasks] = useState<ITask[] | null>(null);
+import { Task, ITask, Catagory } from "src/utils/database.util";
 
-  const saveTasks = (tasks: ITask[]) => {
-    if (name) {
-      localStorage.setItem(name, JSON.stringify(tasks));
-    }
-  };
+export function useTasks(catagory: Catagory | null) {
+  const [tasks, setTasks] = useState<Task[]>([]);
 
-  const addTask = (content: string, date: Date) => {
-    if (tasks && name) {
-      const task: ITask = {
-        content,
-        date
-      };
-      const tasksNew = [task, ...tasks];
+  const addTask = async (task: ITask) => {
+    if (catagory) {
+      const tNew = await new Task(task).save();
+      const tasksNew = [tNew, ...tasks];
       setTasks(tasksNew);
-      saveTasks(tasksNew);
     }
   };
 
   useEffect(() => {
-    if (name) {
-      const tasksNew: Array<{ content: string; date: string }> = JSON.parse(
-        localStorage.getItem(name) || "[]"
-      );
-      const tasksNewParsed: ITask[] = tasksNew.map(elm => {
-        return { content: elm.content, date: new Date(elm.date) };
-      });
-      setTasks(tasksNewParsed);
+    (async () => {
+      if (catagory) {
+        await catagory.loadTasks()
+        setTasks(catagory.tasks.slice());
 
-      return () => {
-        setTasks(null);
-      };
-    }
-  }, [name]);
+        return () => {
+          setTasks([]);
+        };
+      }
+
+    })();
+  }, [catagory]);
 
   return { tasks, addTask };
-}
-
-export interface ITask {
-  content: string;
-  date: Date;
 }

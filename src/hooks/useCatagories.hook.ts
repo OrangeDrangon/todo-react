@@ -14,6 +14,7 @@ export function useCatagories() {
     const catNew = await new Catagory(data).save();
     const catagoriesNew = [catNew, ...catagories];
     setCatagories(catagoriesNew);
+    return catNew;
   };
 
   return { catagories, addCatagory };
