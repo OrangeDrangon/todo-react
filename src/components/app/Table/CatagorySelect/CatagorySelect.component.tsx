@@ -34,9 +34,15 @@ function CatagorySelect({
       <Modal
         children={
           <AddCatagory
-            submit={(catagory: string) => {
-              if (catagory.length > 0 && !catagories.includes(catagory)) {
-                addCatagory(catagory);
+            submit={async (catagory: string) => {
+              if (
+                catagory.length > 0 &&
+                !catagories.map(elm => elm.label).includes(catagory)
+              ) {
+                await addCatagory({
+                  label: catagory,
+                  value: catagory.toLowerCase()
+                });
                 setName(catagory);
                 setOpen(false);
               }

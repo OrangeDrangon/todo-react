@@ -1,16 +1,19 @@
 import { useState, useEffect } from "react";
+import { Catagory } from "src/utils/database.util";
 
 export function useCatagories() {
-  const [catagories, setCatagories] = useState<string[]>([]);
+  const [catagories, setCatagories] = useState<Catagory[]>([]);
 
   useEffect(() => {
-    setCatagories(JSON.parse(localStorage.getItem("catagories") || "[]"));
+    (async () => {
+      setCatagories(await Catagory.getAll());
+    })();
   }, []);
 
-  const addCatagory = (catagory: string) => {
-    const catagoriesNew = [catagory, ...catagories];
+  const addCatagory = async (data: { label: string; value: string }) => {
+    const catNew = await new Catagory(data).save();
+    const catagoriesNew = [catNew, ...catagories];
     setCatagories(catagoriesNew);
-    localStorage.setItem("catagories", JSON.stringify(catagoriesNew));
   };
 
   return { catagories, addCatagory };

@@ -15,7 +15,7 @@ function AddCatagory({
     <div
       className={classes.container}
       onClick={function(event) {
-        if (event.target == event.currentTarget) {
+        if (event.target === event.currentTarget) {
           setOpen(false);
         }
       }}

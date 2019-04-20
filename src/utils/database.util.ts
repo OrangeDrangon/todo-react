@@ -30,26 +30,36 @@ export class Catagory implements ICatagory {
    * Saves the modified record to the database including deleting any removed tasks
    * Uses a transaction for roll back purposes on error
    */
-  save() {
-    return db.transaction("rw", [db.catagories], async () => {
-      this.id = await db.catagories.put(this);
+  async save() {
+    return await db.transaction("rw", [db.catagories, db.tasks], async () => {
+      const catNew = await db.addCatagory({
+        id: this.id,
+        label: this.label,
+        value: this.value
+      });
 
-      const taskIds = await Promise.all(
-        this.tasks.map(task => db.tasks.put(task))
-      );
+      if (catNew.id) {
+        this.id = catNew.id;
 
-      await db.tasks
-        .where("catagoryId")
-        .equals(this.id)
-        .and(task => {
-          if (task.id) {
-            return taskIds.indexOf(task.id) === -1;
-          } else {
-            return false;
-          }
-        })
-        .delete();
+        const taskIds = await Promise.all(
+          this.tasks.map(task => db.tasks.put(task))
+        );
+
+        await db.tasks
+          .where("catagoryId")
+          .equals(this.id)
+          .and(task => {
+            if (task.id) {
+              return taskIds.indexOf(task.id) === -1;
+            } else {
+              return false;
+            }
+          })
+          .delete();
+      }
+      return catNew;
     });
+
   }
 
   async loadTasks() {
@@ -61,6 +71,10 @@ export class Catagory implements ICatagory {
     } else {
       throw new Error("Please save the catagory to access its foreign objects");
     }
+  }
+
+  static async getAll() {
+    return (await db.catagories.toArray()).map(elm => new Catagory(elm));
   }
 }
 
@@ -79,6 +93,16 @@ export class Database extends Dexie {
     this.tasks = this.table("tasks");
 
     this.catagories.mapToClass(Catagory);
+  }
+
+  async addCatagory({ id, label, value }: ICatagory) {
+    return await this.transaction("rw", [this.catagories], async () => {
+      const newId = id
+        ? await this.catagories.put({ id, label, value })
+        : await this.catagories.put({ label, value });
+
+      return new Catagory({ id: newId, label, value });
+    });
   }
 }
 
