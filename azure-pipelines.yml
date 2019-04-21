@@ -19,3 +19,13 @@ steps:
     npm install
     npm run build
   displayName: 'npm install and build'
+
+- script: |
+    git config --global user.email $(EMAIL)
+    git config --global user.name  $(NAME)
+  displayName: "Config git credentials"
+
+
+- script: |
+    node deploy.js $(USERNAME) $(ACCESS_TOKEN)
+  displayName: 'Deploy to GitHub Pages'
