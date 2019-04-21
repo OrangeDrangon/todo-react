@@ -27,10 +27,10 @@ function Table() {
           setCatagory={setCatagory}
         />
       </div>
-      {catagory && catagoryId ? (
+      {catagoryId ? (
         <div className={classes.content}>
           <div className={classes.tasks}>
-            <Tasks catagory={catagory} tasks={tasks} />
+            <Tasks tasks={tasks} />
           </div>
           <div className={classes.actions}>
             <AddTask

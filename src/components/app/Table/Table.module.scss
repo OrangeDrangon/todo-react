@@ -7,7 +7,7 @@
   }
 
   .dropdown {
-    margin-bottom: 15px;
+    margin-bottom: 7.5px;
   }
 
   .content {
@@ -21,10 +21,16 @@
       overflow-y: auto;
       scrollbar-color: rgb(155, 155, 155) white;
       scrollbar-width: thin;
-      margin-top: -15px;
     }
 
     .actions {
+      display: flex;
+      flex-flow: column;
+      justify-content: flex-end;
+      align-items: flex-end;
+      flex: 1 0 0;
+
+      width: 100%;
       margin-top: 15px;
     }
   }

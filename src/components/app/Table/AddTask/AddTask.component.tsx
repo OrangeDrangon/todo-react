@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Input, Button, Fade, Slide, Modal } from "@material-ui/core";
+import { Button, Fade, Slide, Modal, TextField } from "@material-ui/core";
 import DateFnsUtils from "@date-io/date-fns";
 import {
   MuiPickersUtilsProvider,
@@ -16,7 +16,8 @@ function AddTask({
 }) {
   const [content, setContent] = useState("");
   const [open, setOpen] = useState(false);
-  const [date, setDate] = useState(new Date());
+  // Sets the date 15 mins into the future
+  const [date, setDate] = useState(new Date(Date.now() + 15 * 60 * 1000));
 
   return (
     <div>
@@ -35,27 +36,36 @@ function AddTask({
         open={open}
         onBackdropClick={() => setOpen(false)}
         onEscapeKeyDown={() => setOpen(true)}
-        disableAutoFocus={true}
         className={classes.modal}
-        // Scroll bars fml
-        style={{ zIndex: 100000000000 }}
         children={
           <div className={`${classes.card} card`}>
             <form className={classes.form}>
-              <Input
-                onChange={({ currentTarget }) =>
-                  setContent(currentTarget.value)
-                }
-              />
+              <div className={classes.field}>
+                <TextField
+                  label="Task"
+                  onChange={({ currentTarget }) =>
+                    setContent(currentTarget.value)
+                  }
+                />
+              </div>
               <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                <DatePicker onChange={setDate} value={date} />
-                <TimePicker onChange={setDate} value={date} />
+                <div className={classes.field}>
+                  <DatePicker onChange={setDate} value={date} label="Date" />
+                </div>
+                <div className={classes.field}>
+                  <TimePicker onChange={setDate} value={date} label="Time" />
+                </div>
               </MuiPickersUtilsProvider>
             </form>
             <Button
               color="primary"
               variant="contained"
-              onClick={() => submit(content, date)}
+              onClick={async () => {
+                if (content.length > 0 && date > new Date()) {
+                  await submit(content, date);
+                  setOpen(false);
+                }
+              }}
             >
               Add Task
             </Button>
