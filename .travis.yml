@@ -1,0 +1,41 @@
+dist: xenial
+language: node_js
+
+addons:
+  chrome: stable
+  firefox: latest
+
+cache:
+  directories:
+    - node_modules
+
+node_js:
+  - "11"
+
+branches:
+  only:
+    - master
+
+matrix:
+  fast_finish: true
+
+install:
+  - npm install
+
+before_script:
+  - export CHROME_BIN=/usr/bin/google-chrome
+
+# Add testing and linting here when ready
+# script:
+
+# after_success:
+script:
+  - npm run build
+
+deploy:
+  provider: pages
+  skip_cleanup: true
+  github_token: $GH_TOKEN
+  local_dir: build
+  on:
+    branch: master
