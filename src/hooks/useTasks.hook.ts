@@ -31,11 +31,13 @@ export function useTasks(catagory: Catagory | null) {
   ) => {
     if (catagory) {
       await catagory.loadTasks();
-      const task = catagory.tasks[index];
+      const tasksNew = catagory.tasks.slice().reverse();
+      const task = tasksNew[index];
       task.content = content;
       task.date = date;
+      catagory.tasks = tasksNew.slice().reverse();
       await catagory.save();
-      setTasks(catagory.tasks.slice());
+      setTasks(tasksNew);
     }
   };
 

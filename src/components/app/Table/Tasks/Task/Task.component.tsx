@@ -21,11 +21,11 @@ function Task({
   const [open, setOpen] = useState(false);
 
   return (
-    <div>
+    <div className={classes.border}>
       <Fade in={true}>
         <Slide direction="up" in={true}>
           <div className={classes.wrapper}>
-            <div>
+            <div className={classes.check}>
               <IconButton onClick={async () => await deleteTask(index)}>
                 <Check />
               </IconButton>
@@ -40,7 +40,7 @@ function Task({
               </div>
             </div>
             <div className={classes.fill} />
-            <div>
+            <div className={classes.more}>
               <IconButton onClick={() => setOpen(true)}>
                 <MoreVert />
               </IconButton>

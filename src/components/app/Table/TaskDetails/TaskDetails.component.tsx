@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Modal, Button, TextField } from "@material-ui/core";
 import DateFnsUtils from "@date-io/date-fns";
 import {
@@ -22,8 +22,17 @@ function TaskDetails({
   initialContent: string;
   submit: (content: string, date: Date) => Promise<boolean>;
 }) {
-  const [content, setContent] = useState(initialContent);
-  const [date, setDate] = useState(initialDate);
+  const [content, setContent] = useState("");
+  const [date, setDate] = useState(new Date());
+
+  useEffect(() => {
+    setContent(initialContent);
+    setDate(initialDate);
+    return () => {
+      setContent("");
+      setDate(new Date());
+    };
+  }, [initialContent, initialDate]);
 
   return (
     <Modal
@@ -56,7 +65,7 @@ function TaskDetails({
             color="primary"
             variant="contained"
             onClick={async () => {
-              if(await submit(content, date)) {
+              if (await submit(content, date)) {
                 setOpen(false);
               }
             }}

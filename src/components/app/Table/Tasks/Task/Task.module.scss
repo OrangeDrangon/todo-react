@@ -4,8 +4,11 @@
   justify-content: center;
   align-items: flex-start;
 
-  border-bottom: 1px solid #aaaaaa;
   margin-bottom: 5px;
+
+  .check {
+    margin-right: 5px;
+  }
 
   .task {
     display: flex;
@@ -19,10 +22,7 @@
       justify-content: center;
       align-items: center;
 
-      font-size: .9em;
-
-      margin-bottom: 5px;
-
+      font-size: 0.9em;
       .string {
         margin-left: 5px;
       }
@@ -32,9 +32,18 @@
   .fill {
     flex: 1 0 0;
   }
+
+  .more {
+    margin-right: 5px;
+  }
 }
 
-.wrapper:last-of-type {
+.border {
+  border-bottom: 2px solid #e6e6e6;
+  margin-bottom: 5px;
+}
+
+.border:last-of-type {
   border-bottom: none;
   margin-bottom: 0;
 }
