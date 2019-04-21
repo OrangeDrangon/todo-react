@@ -14,7 +14,7 @@ import { Catagory, db } from "src/utils/database.util";
 function Table() {
   const { catagories, addCatagory, deleteCatagory } = useCatagories();
   const [catagory, setCatagory] = useState<Catagory | null>(null);
-  const { tasks, addTask, deleteTask } = useTasks(catagory);
+  const { tasks, addTask, deleteTask, updateTask } = useTasks(catagory);
   const handleChange = async (selected: Option) => {
     setCatagory(await db.getCatagory(selected.value));
   };
@@ -36,12 +36,21 @@ function Table() {
       {catagory && catagoryId ? (
         <div className={classes.content}>
           <div className={classes.tasks}>
-            <Tasks tasks={tasks} deleteTask={deleteTask} />
+            <Tasks
+              tasks={tasks}
+              deleteTask={deleteTask}
+              updateTask={updateTask}
+            />
           </div>
           <div className={classes.actions}>
             <AddTask
               submit={async (content: string, date: Date) => {
-                await addTask({ catagoryId, content, date });
+                if (content.length > 0 && date > new Date()) {
+                  await addTask({ catagoryId, content, date });
+                  return true;
+                } else {
+                  return false;
+                }
               }}
             />
             <div style={{ flex: "1 0 0" }} />
@@ -54,7 +63,7 @@ function Table() {
           </div>
         </div>
       ) : (
-        <h3>Please select a catagory to get started</h3>
+        ""
       )}
     </div>
   );

@@ -20,7 +20,7 @@ function TaskDetails({
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
   initialDate: Date;
   initialContent: string;
-  submit: (content: string, date: Date) => void;
+  submit: (content: string, date: Date) => Promise<boolean>;
 }) {
   const [content, setContent] = useState(initialContent);
   const [date, setDate] = useState(initialDate);
@@ -56,7 +56,9 @@ function TaskDetails({
             color="primary"
             variant="contained"
             onClick={async () => {
-              await submit(content, date);
+              if(await submit(content, date)) {
+                setOpen(false);
+              }
             }}
           >
             Add Task

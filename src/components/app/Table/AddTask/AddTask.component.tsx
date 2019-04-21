@@ -5,7 +5,7 @@ import TaskDetails from "../TaskDetails/TaskDetails.component";
 function AddTask({
   submit
 }: {
-  submit: (content: string, date: Date) => void;
+  submit: (content: string, date: Date) => Promise<boolean>;
 }) {
   const [open, setOpen] = useState(false);
 

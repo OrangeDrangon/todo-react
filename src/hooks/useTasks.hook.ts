@@ -16,10 +16,26 @@ export function useTasks(catagory: Catagory | null) {
   const deleteTask = async (index: number) => {
     if (catagory) {
       await catagory.loadTasks();
-      catagory.tasks.reverse().splice(index, 1).reverse();
+      catagory.tasks
+        .reverse()
+        .splice(index, 1)
+        .reverse();
       await catagory.save();
       setTasks(catagory.tasks.slice());
+    }
+  };
 
+  const updateTask = async (
+    index: number,
+    { content, date }: { content: string; date: Date }
+  ) => {
+    if (catagory) {
+      await catagory.loadTasks();
+      const task = catagory.tasks[index];
+      task.content = content;
+      task.date = date;
+      await catagory.save();
+      setTasks(catagory.tasks.slice());
     }
   };
 
@@ -36,5 +52,5 @@ export function useTasks(catagory: Catagory | null) {
     })();
   }, [catagory]);
 
-  return { tasks, addTask, deleteTask };
+  return { tasks, addTask, deleteTask, updateTask };
 }

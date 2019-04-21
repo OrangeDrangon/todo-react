@@ -1,45 +1,68 @@
-import React from "react";
+import React, { useState } from "react";
 import format from "date-fns/esm/format";
 import { Fade, Slide, IconButton } from "@material-ui/core";
 import { Check, MoreVert, AccessTime } from "@material-ui/icons";
 
 import classes from "./Task.module.scss";
 import { Task as TaskClass } from "src/utils/database.util";
+import TaskDetails from "../../TaskDetails/TaskDetails.component";
 
 function Task({
   task,
-  deleteTask
+  index,
+  deleteTask,
+  updateTask
 }: {
   task: TaskClass;
-  deleteTask: () => void;
+  index: number;
+  deleteTask: (index: number) => void;
+  updateTask: (index: number, data: {content: string, date: Date}) => void;
 }) {
+  const [open, setOpen] = useState(false);
+
   return (
-    <Fade in={true}>
-      <Slide direction="up" in={true}>
-        <div className={classes.wrapper}>
-          <div>
-            <IconButton onClick={deleteTask}>
-              <Check />
-            </IconButton>
-          </div>
-          <div className={classes.task}>
-            <div>{task.content}</div>
-            <div className={classes.time}>
-              <AccessTime />
-              <span className={classes.string}>
-              {format(task.date, "MMMM do h:mm a")}
-              </span>
+    <div>
+      <Fade in={true}>
+        <Slide direction="up" in={true}>
+          <div className={classes.wrapper}>
+            <div>
+              <IconButton onClick={async () => await deleteTask(index)}>
+                <Check />
+              </IconButton>
+            </div>
+            <div className={classes.task}>
+              <div>{task.content}</div>
+              <div className={classes.time}>
+                <AccessTime />
+                <span className={classes.string}>
+                  {format(task.date, "MMMM do h:mm a")}
+                </span>
+              </div>
+            </div>
+            <div className={classes.fill} />
+            <div>
+              <IconButton onClick={() => setOpen(true)}>
+                <MoreVert />
+              </IconButton>
             </div>
           </div>
-          <div className={classes.fill} />
-          <div>
-            <IconButton>
-              <MoreVert />
-            </IconButton>
-          </div>
-        </div>
-      </Slide>
-    </Fade>
+        </Slide>
+      </Fade>
+      <TaskDetails
+        open={open}
+        setOpen={setOpen}
+        initialContent={task.content}
+        initialDate={task.date}
+        submit={async (content, date) => {
+          if (content.length > 0 && date > new Date()) {
+            await updateTask(index, { content, date });
+            return true;
+          } else {
+            return false;
+          }
+        }}
+      />
+    </div>
   );
 }
 
