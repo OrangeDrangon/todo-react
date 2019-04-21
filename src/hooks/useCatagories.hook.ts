@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Catagory, ICatagory } from "src/utils/database.util";
+import { Catagory, ICatagory } from "../utils/database.util";
 
 export function useCatagories() {
   const [catagories, setCatagories] = useState<Catagory[]>([]);
