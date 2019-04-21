@@ -2,7 +2,7 @@ import React from "react";
 
 import classes from "./Tasks.module.scss";
 import Task from "./Task/Task.component";
-import { Task as TaskClass } from "../../../../utils/database.util";
+import { Task as TaskClass } from "../../../utils/database.util";
 
 function Tasks({
   tasks,
