@@ -16,14 +16,13 @@ export function useTasks(catagory: Catagory | null) {
   useEffect(() => {
     (async () => {
       if (catagory) {
-        await catagory.loadTasks()
-        setTasks(catagory.tasks.slice());
+        await catagory.loadTasks();
+        setTasks(catagory.tasks.slice().reverse());
 
         return () => {
           setTasks([]);
         };
       }
-
     })();
   }, [catagory]);
 

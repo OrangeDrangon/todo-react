@@ -1,0 +1,14 @@
+.modal {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .card {
+    background-color: white;
+    width: calc(85% - 30px);
+
+    .form {
+      margin-bottom: 15px;
+    }
+  }
+}

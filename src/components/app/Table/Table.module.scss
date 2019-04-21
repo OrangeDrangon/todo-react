@@ -1,4 +1,31 @@
 .card {
-  width: 85%;
-  height: 50%;
+  width: calc(85% - 30px);
+  height: calc(85% - 30px);
+
+  .header {
+    font-size: 50px;
+  }
+
+  .dropdown {
+    margin-bottom: 15px;
+  }
+
+  .content {
+    display: flex;
+    flex-flow: column;
+
+    height: 100%;
+    overflow: hidden;
+
+    .tasks {
+      overflow-y: auto;
+      scrollbar-color: rgb(155, 155, 155) white;
+      scrollbar-width: thin;
+      margin-top: -15px;
+    }
+
+    .actions {
+      margin-top: 15px;
+    }
+  }
 }
