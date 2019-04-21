@@ -18,10 +18,10 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "preserve",
-    "noImplicitThis": false
+    "noImplicitThis": false,
+    "experimentalDecorators": true
   },
   "include": [
     "src"
   ],
-  "extends": "./tsconfig.paths.json"
 }
