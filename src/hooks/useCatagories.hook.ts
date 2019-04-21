@@ -17,5 +17,12 @@ export function useCatagories() {
     return catNew;
   };
 
-  return { catagories, addCatagory };
+  const deleteCatagory = async (catagory: Catagory) => {
+    const catsNew = catagories.slice();
+    catsNew.splice(catsNew.indexOf(catagory), 1);
+    await catagory.delete();
+    setCatagories(catsNew);
+  };
+
+  return { catagories, addCatagory, deleteCatagory };
 }

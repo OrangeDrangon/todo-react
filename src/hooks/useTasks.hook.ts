@@ -13,6 +13,16 @@ export function useTasks(catagory: Catagory | null) {
     }
   };
 
+  const deleteTask = async (index: number) => {
+    if (catagory) {
+      await catagory.loadTasks();
+      catagory.tasks.reverse().splice(index, 1).reverse();
+      await catagory.save();
+      setTasks(catagory.tasks.slice());
+
+    }
+  };
+
   useEffect(() => {
     (async () => {
       if (catagory) {
@@ -26,5 +36,5 @@ export function useTasks(catagory: Catagory | null) {
     })();
   }, [catagory]);
 
-  return { tasks, addTask };
+  return { tasks, addTask, deleteTask };
 }

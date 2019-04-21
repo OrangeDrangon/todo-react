@@ -2,12 +2,10 @@
   width: calc(85% - 30px);
   height: calc(85% - 30px);
 
+  max-width: 850px;
+
   .header {
     font-size: 50px;
-  }
-
-  .dropdown {
-    margin-bottom: 7.5px;
   }
 
   .content {
@@ -25,8 +23,8 @@
 
     .actions {
       display: flex;
-      flex-flow: column;
-      justify-content: flex-end;
+      flex-flow: row-reverse;
+      justify-content: flex-start;
       align-items: flex-end;
       flex: 1 0 0;
 

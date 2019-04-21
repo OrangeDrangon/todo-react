@@ -33,6 +33,15 @@ export class Task implements ITask {
     }
     return tNew;
   }
+
+  async delete() {
+    if (this.id) {
+      await db.tasks
+        .where("id")
+        .equals(this.id)
+        .delete();
+    }
+  }
 }
 
 export class Catagory implements ICatagory {
@@ -87,6 +96,20 @@ export class Catagory implements ICatagory {
         .toArray()).map(elm => new Task(elm));
     } else {
       throw new Error("Please save the catagory to access its foreign objects");
+    }
+  }
+
+  async delete() {
+    if (this.id) {
+      await Promise.all(
+        this.tasks.map(task => {
+          return task.delete();
+        })
+      );
+      await db.catagories
+        .where("id")
+        .equals(this.id)
+        .delete();
     }
   }
 

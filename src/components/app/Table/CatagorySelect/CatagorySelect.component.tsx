@@ -6,19 +6,21 @@ import "react-dropdown/style.css";
 
 import classes from "./CatagorySelect.module.scss";
 import AddCatagory from "./AddCatagory/AddCatagory.component";
-import { useCatagories } from "src/hooks/useCatagories.hook";
-import { Catagory } from "src/utils/database.util";
+import { Catagory, ICatagory } from "src/utils/database.util";
 
 function CatagorySelect({
   onChange,
   catagory,
-  setCatagory
+  setCatagory,
+  catagories,
+  addCatagory
 }: {
   onChange: (selected: Option) => void;
   catagory: Catagory | null;
   setCatagory: React.Dispatch<React.SetStateAction<Catagory | null>>;
+  catagories: Catagory[];
+  addCatagory: (data: ICatagory) => Promise<Catagory>;
 }) {
-  const { catagories, addCatagory } = useCatagories();
   const [open, setOpen] = useState(false);
 
   const option = catagory
