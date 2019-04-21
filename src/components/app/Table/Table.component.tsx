@@ -54,7 +54,7 @@ function Table() {
           </div>
         </div>
       ) : (
-        <div>Please select a catagory</div>
+        <h3>Please select a catagory to get started</h3>
       )}
     </div>
   );

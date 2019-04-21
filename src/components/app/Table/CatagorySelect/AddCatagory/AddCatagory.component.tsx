@@ -1,21 +1,49 @@
 import React, { useState } from "react";
-import { Card, Button, Input } from "@material-ui/core";
+import { Button, IconButton, Modal, TextField } from "@material-ui/core";
+import { Add } from "@material-ui/icons";
 
 import classes from "./AddCatagory.module.scss";
 
 function AddCatagory({
-  submit,
+  submit
 }: {
-  submit: (catagory: string) => void;
+  submit: (value: string) => Promise<boolean>;
 }) {
   const [value, setValue] = useState("");
+  const [open, setOpen] = useState(false);
+
   return (
-    <Card className={classes.card}>
-      <Input onChange={({ currentTarget }) => setValue(currentTarget.value)} />
-      <Button color="primary" variant="contained" onClick={() => submit(value)}>
-        Submit
-      </Button>
-    </Card>
+    <div>
+      <IconButton color="primary" onClick={() => setOpen(true)}>
+        <Add />
+      </IconButton>
+      <Modal
+        className={classes.modal}
+        open={open}
+        onBackdropClick={() => setOpen(false)}
+        onEscapeKeyDown={() => setOpen(false)}
+        children={
+          <div className={`${classes.card} card`}>
+            <TextField
+              className={classes.input}
+              label="Name"
+              onChange={({ currentTarget }) => setValue(currentTarget.value)}
+            />
+            <Button
+              color="primary"
+              variant="contained"
+              onClick={async () => {
+                if (await submit(value)) {
+                  setOpen(false);
+                }
+              }}
+            >
+              Submit
+            </Button>
+          </div>
+        }
+      />
+    </div>
   );
 }
 

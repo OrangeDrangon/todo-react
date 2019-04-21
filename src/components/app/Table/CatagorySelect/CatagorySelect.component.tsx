@@ -1,6 +1,4 @@
-import React, { useState } from "react";
-import { Modal, IconButton } from "@material-ui/core";
-import { Add } from "@material-ui/icons";
+import React from "react";
 import Dropdown, { Option } from "react-dropdown";
 import "react-dropdown/style.css";
 
@@ -21,8 +19,6 @@ function CatagorySelect({
   catagories: Catagory[];
   addCatagory: (data: ICatagory) => Promise<Catagory>;
 }) {
-  const [open, setOpen] = useState(false);
-
   const option = catagory
     ? {
         label: catagory.label,
@@ -38,32 +34,20 @@ function CatagorySelect({
         onChange={onChange}
         value={option}
       />
-      <IconButton color="primary" onClick={() => setOpen(true)}>
-        <Add />
-      </IconButton>
-      <Modal
-        className={classes.modal}
-        children={
-          <AddCatagory
-            submit={async (catagory: string) => {
-              if (
-                catagory.length > 0 &&
-                !catagories.map(elm => elm.label).includes(catagory)
-              ) {
-                const catNew = await addCatagory({
-                  label: catagory,
-                  value: catagory.toLowerCase()
-                });
-                setCatagory(catNew);
-                setOpen(false);
-              }
-            }}
-          />
-        }
-        open={open}
-        onBackdropClick={() => setOpen(false)}
-        onEscapeKeyDown={() => setOpen(false)}
-        disableAutoFocus={true}
+      <AddCatagory
+        submit={async (label: string) => {
+          const value = label.toLowerCase();
+          if (
+            label.length > 0 &&
+            catagories.map(catagory => catagory.value).indexOf(value) === -1
+          ) {
+            const catagory = await addCatagory({ label, value });
+            setCatagory(catagory);
+            return true;
+          } else {
+            return false;
+          }
+        }}
       />
     </div>
   );
