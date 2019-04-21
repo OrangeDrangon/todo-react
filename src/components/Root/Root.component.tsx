@@ -1,10 +1,10 @@
 import React from "react";
 
-import classes from "./App.module.scss";
+import classes from "./Root.module.scss";
 
 import Table from "../Table/Table.component";
 
-function App() {
+function Root() {
   return (
     <div className={classes.container}>
       <Table />
@@ -12,4 +12,4 @@ function App() {
   );
 }
 
-export default App;
+export default Root;
