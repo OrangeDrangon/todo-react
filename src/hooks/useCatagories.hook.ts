@@ -19,7 +19,7 @@ export function useCatagories() {
 
   const deleteCatagory = async (catagory: Catagory) => {
     const catsNew = catagories.slice();
-    catsNew.splice(catsNew.indexOf(catagory), 1);
+    catsNew.splice(catsNew.map(cat => cat.id).indexOf(catagory.id), 1);
     await catagory.delete();
     setCatagories(catsNew);
   };

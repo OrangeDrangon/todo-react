@@ -21,5 +21,13 @@ steps:
   displayName: 'npm install and build'
 
 - script: |
-    npm run deploy
+    git config --global user.email $(EMAIL)
+    git config --global user.name  $(NAME)
+  displayName: "Config git credentials"
+  condition: "and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))"
+
+
+- script: |
+    node deploy.js $(USERNAME) $(ACCESS_TOKEN)
   displayName: 'Deploy to GitHub Pages'
+  condition: "and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))"

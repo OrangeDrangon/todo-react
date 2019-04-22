@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import format from "date-fns/esm/format";
+import { format } from "date-fns/esm";
 import { Fade, Slide, IconButton } from "@material-ui/core";
 import { Check, MoreVert, AccessTime } from "@material-ui/icons";
 
@@ -16,7 +16,7 @@ function Task({
   task: TaskClass;
   index: number;
   deleteTask: (index: number) => void;
-  updateTask: (index: number, data: {content: string, date: Date}) => void;
+  updateTask: (index: number, data: { content: string; date: Date }) => void;
 }) {
   const [open, setOpen] = useState(false);
 
