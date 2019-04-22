@@ -7,9 +7,9 @@ import Tasks from "./Tasks/Tasks.component";
 import AddTask from "./AddTask/AddTask.component";
 import DeleteCatagory from "./DeleteCatagory/DeleteCatagory.component";
 
-import { useTasks } from "../../hooks/useTasks.hook";
-import { useCatagories } from "../../hooks/useCatagories.hook";
-import { Catagory, db } from "../../utils/database.util";
+import { useTasks } from "hooks/useTasks.hook";
+import { useCatagories } from "hooks/useCatagories.hook";
+import { Catagory, db } from "utils/database.util";
 
 function Table() {
   const { catagories, addCatagory, deleteCatagory } = useCatagories();

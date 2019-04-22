@@ -4,8 +4,9 @@ import { Fade, Slide, IconButton } from "@material-ui/core";
 import { Check, MoreVert, AccessTime } from "@material-ui/icons";
 
 import classes from "./Task.module.scss";
-import { Task as TaskClass } from "../../../../utils/database.util";
-import TaskDetails from "../../TaskDetails/TaskDetails.component";
+import TaskDetails from "components/Table/TaskDetails/TaskDetails.component";
+
+import { Task as TaskClass } from "utils/database.util";
 
 function Task({
   task,

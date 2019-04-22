@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-import { Task, Catagory, ITask } from "../utils/database.util";
+import { Task, Catagory, ITask } from "utils/database.util";
 
 export function useTasks(catagory: Catagory | null) {
   const [tasks, setTasks] = useState<Task[]>([]);

@@ -19,9 +19,11 @@
     "noEmit": true,
     "jsx": "preserve",
     "noImplicitThis": false,
-    "experimentalDecorators": true
+    "experimentalDecorators": true,
+    "baseUrl": "./src"
   },
   "include": [
     "src"
   ],
+  "extends": "./tsconfig.paths.json"
 }
