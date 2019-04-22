@@ -17,8 +17,16 @@ steps:
 
 - script: |
     npm install
-    npm run build
-  displayName: 'npm install and build'
+  displayName: 'Install dependencies'
+
+- script: |
+    npm build
+  displayName: 'Build App'
+
+- script: |
+    CI=true npm run test
+  displayName: 'Run tests'
+  condition: "and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))"
 
 - script: |
     git config --global user.email $(EMAIL)
@@ -29,5 +37,5 @@ steps:
 
 - script: |
     node deploy.js $(USERNAME) $(ACCESS_TOKEN)
-  displayName: 'Deploy to GitHub Pages'
+  displayName: 'Deploy App to GitHub Pages'
   condition: "and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))"
