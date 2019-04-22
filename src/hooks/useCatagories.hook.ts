@@ -7,6 +7,9 @@ export function useCatagories() {
   useEffect(() => {
     (async () => {
       setCatagories(await Catagory.getAll());
+      return () => {
+        setCatagories([]);
+      }
     })();
   }, []);
 
