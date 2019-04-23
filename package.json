@@ -5,7 +5,6 @@
   "dependencies": {
     "date-fns": "^2.0.0-alpha.27",
     "dexie": "^2.0.4",
-    "fake-indexeddb": "^2.1.0",
     "material-ui-pickers": "^2.2.4",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
@@ -19,6 +18,7 @@
     "@types/node": "11.13.7",
     "@types/react": "^16.8.14",
     "@types/react-dom": "16.8.4",
+    "fake-indexeddb": "^2.1.0",
     "gh-pages": "^2.0.1",
     "node-sass": "^4.11.0",
     "react-scripts": "3.0.0",
@@ -28,8 +28,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "deploy": "node deploy.js"
+    "eject": "react-scripts eject"
   },
   "eslintConfig": {
     "extends": "react-app"

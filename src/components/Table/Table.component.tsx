@@ -15,6 +15,7 @@ function Table() {
   const { catagories, addCatagory, deleteCatagory } = useCatagories();
   const [catagory, setCatagory] = useState<Catagory | null>(null);
   const { tasks, addTask, deleteTask, updateTask } = useTasks(catagory);
+
   const handleChange = async (selected: Option) => {
     setCatagory(await db.getCatagory(selected.value));
   };
