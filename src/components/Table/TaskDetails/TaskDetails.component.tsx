@@ -28,10 +28,6 @@ function TaskDetails({
   useEffect(() => {
     setContent(initialContent);
     setDate(initialDate);
-    return () => {
-      setContent("");
-      setDate(new Date());
-    };
   }, [initialContent, initialDate]);
 
   return (
