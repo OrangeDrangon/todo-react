@@ -4,7 +4,8 @@ import "react-dropdown/style.css";
 
 import classes from "./CatagorySelect.module.scss";
 import AddCatagory from "./AddCatagory/AddCatagory.component";
-import { Catagory, ICatagory } from "../../../utils/database.util";
+
+import { Catagory, ICatagory } from "utils/database.util";
 
 function CatagorySelect({
   onChange,

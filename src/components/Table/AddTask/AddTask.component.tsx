@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Button, Fade, Slide } from "@material-ui/core";
+
 import TaskDetails from "../TaskDetails/TaskDetails.component";
 
 function AddTask({
