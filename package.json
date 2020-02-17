@@ -21,7 +21,7 @@
     "fake-indexeddb": "^2.1.0",
     "gh-pages": "^2.0.1",
     "node-sass": "^4.11.0",
-    "react-scripts": "3.0.0",
+    "react-scripts": "3.4.0",
     "typescript": "3.4.5"
   },
   "scripts": {
